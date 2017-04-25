@@ -34,4 +34,6 @@ HEADERS  += mainwindow.h \
     geometry.h \
     algorithms.h
 
+INCLUDEPATH += ../Eigen/
+
 FORMS    += mainwindow.ui
