@@ -27,10 +27,11 @@ QMAKE_CXXFLAGS_RELEASE *= -O3 -std=c++11 -Wno-deprecated
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    vector.cpp
+    algorithms.cpp
 
 HEADERS  += mainwindow.h \
-    vector.h \
-    primitives.h
+    primitives.h \
+    geometry.h \
+    algorithms.h
 
 FORMS    += mainwindow.ui
