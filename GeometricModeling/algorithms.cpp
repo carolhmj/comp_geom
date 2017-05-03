@@ -26,6 +26,16 @@ std::vector<Vector2f> Algorithm::quickhull(std::vector<Vector2f> C) {
 }
 
 std::vector<Vector2f> Algorithm::rec_quickhull(std::vector<Vector2f> C, Vector2f e, Vector2f d) {
+    //Printar a aresta
+    std::cout << "[e: " << e.transpose() << " d: " << d.transpose() << "]" << std::endl;
+
+    //Printar o conjunto
+    std::cout << "C: [" << std::endl;
+    for (Vector2f& v : C) {
+        std::cout << v.transpose << std::endl;
+    }
+    std::cout << "] " << std::endl;
+
     //se C = {e, d} retorne o segmento orientado ed
     if (C.size() == 2 && C[0] == e &&  C[1] == d) {
         return C;
