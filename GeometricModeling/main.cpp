@@ -14,4 +14,19 @@ int main(int argc, char *argv[])
     //Testando quickhull!
     std::vector<Vector2f> points;
     points.push_back(Vector2f(0,8));
+    points.push_back(Vector2f(-4,6));
+    points.push_back(Vector2f(-5,0));
+    points.push_back(Vector2f(-1,1));
+    points.push_back(Vector2f(-3,-3));
+    points.push_back(Vector2f(0,-4));
+    points.push_back(Vector2f(5,-2));
+    points.push_back(Vector2f(9,0));
+    points.push_back(Vector2f(4,5));
+
+    std::vector<Vector2f> conv_hull = Algorithm::quickhull(points);
+
+    std::cout << "CONVEX HULL ==================================================\n";
+    for (Vector2f& v : conv_hull) {
+        std::cout << v.transpose() << std::endl;
+    }
 }
