@@ -1,4 +1,5 @@
 #include "primitives.h"
+#include <iostream>
 
 //Distância entre pontos
 float Primitives::distance(VectorXf a, VectorXf b) {
@@ -31,7 +32,8 @@ float Primitives::area(std::vector<Vector2f> p) {
         area += p[i][0]*p[i+1][1] - p[i+1][0]*p[i][1];
     }
     //i == p.size - 1
-    area += p[i][0]*p[1][1] - p[1][0]*p[i][1];
+    //        xn       y1   -    x1      yn
+    area += p[i][0]*p[0][1] - p[0][0]*p[i][1];
     return area;
 }
 

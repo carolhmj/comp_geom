@@ -25,9 +25,21 @@ std::vector<Vector2f> Algorithm::quickhull(std::vector<Vector2f> C) {
 
     //TODO: Dividir C nos pontos à direita e à esquerda da reta
     Vector2f div = vmaxy - vminy;
-    std::vector<Vector2f> CL, CR;
+    std::vector<Vector2f> CL = {vminy, vmaxy}, CR = {vminy, vmaxy};
 
-    return rec_quickhull(C, vminy, vmaxy);
+    for (Vector2f& v : C) {
+        if (Primitives::isLeftTo(v, div)) {
+            CL.push_back(v);
+        } else if (Primitives::isLeftTo(v, -div)) {
+            CR.push_back(v);
+        }
+    }
+
+    std::vector<Vector2f> rCL = rec_quickhull(CL, vminy, vmaxy);
+    std::vector<Vector2f> rCR = rec_quickhull(CR, vmaxy, vminy);
+    //retorna a concatenação dos dois vetores
+    rCL.insert(rCL.begin(), rCR.begin(), rCR.end());
+    return rCL;
 }
 
 std::vector<Vector2f> Algorithm::rec_quickhull(std::vector<Vector2f> C, Vector2f e, Vector2f d) {
@@ -36,7 +48,7 @@ std::vector<Vector2f> Algorithm::rec_quickhull(std::vector<Vector2f> C, Vector2f
 
     //Printar o conjunto
     std::cout << "C: [" << std::endl;
-    for (Vector2f v : C) {
+    for (Vector2f& v : C) {
         std::cout << "\t" << v.transpose() << std::endl;
     }
     std::cout << "] " << std::endl;
@@ -45,15 +57,17 @@ std::vector<Vector2f> Algorithm::rec_quickhull(std::vector<Vector2f> C, Vector2f
     if (C.size() == 2/* && C[0] == e &&  C[1] == d*/) {
         return C;
     }
-    Vector2f h;
+    Vector2f h, maxh;
     bool foundh = false;
     float maxSedh = std::numeric_limits<float>::min();
     //encontrar o ponto h tal que Sedh seja máxima
-    for (Vector2f v : C) {
+    for (Vector2f& v : C) {
+        h = v;
         float Sedh = Primitives::area({e,d,h});
+        std::cout << "v: " << v.transpose() << " Sedh: " << Sedh << "\n";
         if (Sedh > maxSedh) {
             maxSedh = Sedh;
-            h = v;
+            maxh = h;
             foundh = true;
         }
     }
@@ -62,13 +76,15 @@ std::vector<Vector2f> Algorithm::rec_quickhull(std::vector<Vector2f> C, Vector2f
         throw 1;
     }
 
+    h = maxh;
+
     Vector2f eh = h-e;
     Vector2f hd = d-h;
     std::vector<Vector2f> CL = {e, h};
     std::vector<Vector2f> CR = {h, d};
     //encontrar CL o conjunto de pontos de C à esquerda de eh
     //encontrar CR o conjunto de pontos de C à esquerda de hd
-    for (Vector2f v : C) {
+    for (Vector2f& v : C) {
         if (Primitives::isLeftTo(v, eh)) {
             CL.push_back(v);
         } else if (Primitives::isLeftTo(v, hd)) {
