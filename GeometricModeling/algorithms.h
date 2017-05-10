@@ -4,6 +4,9 @@
 #include "geometry.h"
 #include "primitives.h"
 #include <vector>
+#include <Eigen/Dense>
+
+using namespace Eigen;
 
 namespace Algorithm {
     //Recebe uma lista de pontos, retorna as arestas do fecho convexo

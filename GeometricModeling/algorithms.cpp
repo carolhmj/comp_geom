@@ -1,6 +1,7 @@
 #include "algorithms.h"
 #include <algorithm>
 #include <limits>
+#include <iostream>
 
 std::vector<Vector2f> Algorithm::quickhull(std::vector<Vector2f> C) {
     //encontrar como as arestas máximas e mínimas em y
@@ -12,7 +13,7 @@ std::vector<Vector2f> Algorithm::quickhull(std::vector<Vector2f> C) {
             miny = v[1];
             vminy = v;
             foundmin = true;
-        } else if (v[1] > maxy) {
+        } if (v[1] > maxy) {
             maxy = v[1];
             vmaxy = v;
             foundmax = true;
@@ -21,6 +22,10 @@ std::vector<Vector2f> Algorithm::quickhull(std::vector<Vector2f> C) {
     if (!foundmin && !foundmax) {
         throw 1;
     }
+
+    //TODO: Dividir C nos pontos à direita e à esquerda da reta
+    Vector2f div = vmaxy - vminy;
+    std::vector<Vector2f> CL, CR;
 
     return rec_quickhull(C, vminy, vmaxy);
 }
@@ -31,20 +36,20 @@ std::vector<Vector2f> Algorithm::rec_quickhull(std::vector<Vector2f> C, Vector2f
 
     //Printar o conjunto
     std::cout << "C: [" << std::endl;
-    for (Vector2f& v : C) {
-        std::cout << v.transpose << std::endl;
+    for (Vector2f v : C) {
+        std::cout << "\t" << v.transpose() << std::endl;
     }
     std::cout << "] " << std::endl;
 
     //se C = {e, d} retorne o segmento orientado ed
-    if (C.size() == 2 && C[0] == e &&  C[1] == d) {
+    if (C.size() == 2/* && C[0] == e &&  C[1] == d*/) {
         return C;
     }
     Vector2f h;
     bool foundh = false;
-    float maxSedh = 0.0;
+    float maxSedh = std::numeric_limits<float>::min();
     //encontrar o ponto h tal que Sedh seja máxima
-    for (Vector2f& v : C) {
+    for (Vector2f v : C) {
         float Sedh = Primitives::area({e,d,h});
         if (Sedh > maxSedh) {
             maxSedh = Sedh;
@@ -63,7 +68,7 @@ std::vector<Vector2f> Algorithm::rec_quickhull(std::vector<Vector2f> C, Vector2f
     std::vector<Vector2f> CR = {h, d};
     //encontrar CL o conjunto de pontos de C à esquerda de eh
     //encontrar CR o conjunto de pontos de C à esquerda de hd
-    for (Vector2f& v : C) {
+    for (Vector2f v : C) {
         if (Primitives::isLeftTo(v, eh)) {
             CL.push_back(v);
         } else if (Primitives::isLeftTo(v, hd)) {
