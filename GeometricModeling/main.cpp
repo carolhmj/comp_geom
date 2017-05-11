@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
     points.push_back(Vector2f(5,-2));
     points.push_back(Vector2f(9,0));
     points.push_back(Vector2f(4,5));
+    points.push_back(Vector2f(8,3));
 
     std::vector<Vector2f> conv_hull = Algorithm::quickhull(points);
 

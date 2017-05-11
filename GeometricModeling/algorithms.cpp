@@ -25,13 +25,15 @@ std::vector<Vector2f> Algorithm::quickhull(std::vector<Vector2f> C) {
 
     //TODO: Dividir C nos pontos à direita e à esquerda da reta
     Vector2f div = vmaxy - vminy;
-    std::vector<Vector2f> CL = {vminy, vmaxy}, CR = {vminy, vmaxy};
+    std::vector<Vector2f> CL, CR;
 
     for (Vector2f& v : C) {
-        if (Primitives::isLeftTo(v, div)) {
-            CL.push_back(v);
-        } else if (Primitives::isLeftTo(v, -div)) {
-            CR.push_back(v);
+        if (v != vminy && v != vmaxy) {
+            if (Primitives::isLeftTo(v-vminy, div)) {
+                CL.push_back(v);
+            } else if (Primitives::isLeftTo(v-vmaxy, -div)) {
+                CR.push_back(v);
+            }
         }
     }
 
@@ -53,9 +55,9 @@ std::vector<Vector2f> Algorithm::rec_quickhull(std::vector<Vector2f> C, Vector2f
     }
     std::cout << "] " << std::endl;
 
-    //se C = {e, d} retorne o segmento orientado ed
-    if (C.size() == 2/* && C[0] == e &&  C[1] == d*/) {
-        return C;
+    //se C = { } retorne o segmento orientado ed
+    if (C.size() == 0) {
+        return {e, d};
     }
     Vector2f h, maxh;
     bool foundh = false;
@@ -80,15 +82,20 @@ std::vector<Vector2f> Algorithm::rec_quickhull(std::vector<Vector2f> C, Vector2f
 
     Vector2f eh = h-e;
     Vector2f hd = d-h;
-    std::vector<Vector2f> CL = {e, h};
-    std::vector<Vector2f> CR = {h, d};
+    std::vector<Vector2f> CL;
+    std::vector<Vector2f> CR;
     //encontrar CL o conjunto de pontos de C à esquerda de eh
     //encontrar CR o conjunto de pontos de C à esquerda de hd
     for (Vector2f& v : C) {
-        if (Primitives::isLeftTo(v, eh)) {
-            CL.push_back(v);
-        } else if (Primitives::isLeftTo(v, hd)) {
-            CR.push_back(v);
+        if (v != h) {
+            std::cout << "orientation of " << v.transpose() << "\n";
+            if (Primitives::isLeftTo(v-e, eh)) {
+                std::cout << "is left to " << eh.transpose() << "\n";
+                CL.push_back(v);
+            } else if (Primitives::isLeftTo(v-h, hd)) {
+                std::cout << "is left to " << hd.transpose() << "\n";
+                CR.push_back(v);
+            }
         }
     }
 
