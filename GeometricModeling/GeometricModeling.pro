@@ -28,12 +28,14 @@ QMAKE_CXXFLAGS_RELEASE *= -O3 -std=c++11 -Wno-deprecated
 SOURCES += main.cpp\
         mainwindow.cpp \
     algorithms.cpp \
-    primitives.cpp
+    primitives.cpp \
+    glwidget.cpp
 
 HEADERS  += mainwindow.h \
     primitives.h \
     geometry.h \
-    algorithms.h
+    algorithms.h \
+    glwidget.h
 
 INCLUDEPATH += ../Eigen/
 
