@@ -7,7 +7,7 @@
 #include "algorithm"
 
 typedef std::pair<std::vector<std::shared_ptr<Geometry::Vertex2D>>, std::vector<std::shared_ptr<Geometry::Edge2D>>> pointsHullPair;
-
+//TODO PERSPECTIVA!!!!!!!!!!!
 class GLWidget : public QOpenGLWidget
 {
 public:
