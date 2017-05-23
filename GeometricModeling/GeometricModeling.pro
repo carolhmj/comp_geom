@@ -29,13 +29,15 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     algorithms.cpp \
     primitives.cpp \
-    glwidget.cpp
+    glwidget.cpp \
+    vertexpainter.cpp
 
 HEADERS  += mainwindow.h \
     primitives.h \
     geometry.h \
     algorithms.h \
-    glwidget.h
+    glwidget.h \
+    vertexpainter.h
 
 INCLUDEPATH += ../Eigen/
 

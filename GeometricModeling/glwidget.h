@@ -1,11 +1,24 @@
 #ifndef GLWIDGET_H
 #define GLWIDGET_H
 #include <QOpenGLWidget>
+#include <vector>
+
+#include "geometry.h"
+#include "algorithm"
+
+typedef std::pair<std::vector<std::shared_ptr<Geometry::Vertex2D>>, std::vector<std::shared_ptr<Geometry::Edge2D>>> pointsHullPair;
 
 class GLWidget : public QOpenGLWidget
 {
 public:
-    GLWidget();
+    explicit GLWidget(QWidget *parent = 0);
+    ~GLWidget();
+private:
+    void initializeGL();
+    void resizeGL(int w, int h);
+    void paintGL();
+
+    std::vector<pointsHullPair> pointsHullSet;
 };
 
 #endif // GLWIDGET_H
