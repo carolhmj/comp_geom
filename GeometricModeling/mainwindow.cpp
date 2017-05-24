@@ -12,3 +12,18 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::on_actionSave_triggered()
+{
+    ui->widget->saveArchive();
+}
+
+void MainWindow::on_actionOpen_triggered()
+{
+    ui->widget->openArchive();
+}
+
+void MainWindow::on_generateHull_clicked()
+{
+    ui->widget->generateHulls();
+}
