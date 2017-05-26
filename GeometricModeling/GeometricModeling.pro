@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -24,6 +24,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 QMAKE_CXXFLAGS_DEBUG *= -g -O0 -std=c++11 -Wno-deprecated
 QMAKE_CXXFLAGS_RELEASE *= -O3 -std=c++11 -Wno-deprecated
+
+win32 {
+    LIBS += -lOpengl32
+}
 
 SOURCES += main.cpp\
         mainwindow.cpp \

@@ -99,11 +99,13 @@ void GLWidget::adjustPerspective()
             }
         }
     }
+    float xDiff = maxX - minX;
+    float yDiff = maxY - minY;
 //    std::cout << "minX " << minX << " maxX " << maxX << " minY " << minY << " maxY " << maxY << "\n";
     //Ajusta a perspectiva de acordo com os pontos máximos encontrados
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(minX-1.0f, maxX+1.0f, minY-1.0f, maxY+1.0f, 0.0f, 1.0f);
+    glOrtho(minX - xDiff/10.0f, maxX + xDiff/10.0f, minY - yDiff/10.0f, maxY + yDiff/10.0f, 0.0f, 1.0f);
     glMatrixMode(GL_MODELVIEW);
 }
 
@@ -137,6 +139,8 @@ void GLWidget::openArchive()
             x = info[1].toFloat();
             y = info[2].toFloat();
             z = info[3].toFloat();
+            std::cout << "Read vertex " << id << ": " << x << " " << y << " " << z << "\n";
+            std::flush(std::cout);
             pointsVertex.push_back(std::make_shared<Geometry::Vertex2D>(id, Vector2f(x,y)));
         }
         pointsHullSet.push_back(pointsVertex);
