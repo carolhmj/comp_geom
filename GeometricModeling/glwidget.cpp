@@ -6,35 +6,6 @@
 
 GLWidget::GLWidget(QWidget *parent) :
     QOpenGLWidget(parent) {
-    std::vector<Vector2f> points;
-    points.push_back(Vector2f(0,8));
-    points.push_back(Vector2f(-4,6));
-    points.push_back(Vector2f(-5,0));
-    points.push_back(Vector2f(-1,1));
-    points.push_back(Vector2f(-3,-3));
-    points.push_back(Vector2f(0,-4));
-    points.push_back(Vector2f(5,-2));
-    points.push_back(Vector2f(9,0));
-    points.push_back(Vector2f(4,5));
-    points.push_back(Vector2f(8,3));
-
-    std::vector<std::shared_ptr<Geometry::Vertex2D>> pointsVertex;
-    for (unsigned int i = 0; i < points.size(); i++) {
-        pointsVertex.push_back(std::make_shared<Geometry::Vertex2D>(i, points[i]));
-    }
-
-    std::vector<std::shared_ptr<Geometry::Edge2D>> conv_hull2 = Algorithm::quickhull(pointsVertex);
-//        std::cout << "CONVEX HULL VERSION 2 ==================================================\n";
-//        for (std::shared_ptr<Geometry::Edge2D>& v : conv_hull2) {
-//            std::cout << v->a->pos.transpose() << " --- " << v->b->pos.transpose() << std::endl;
-//        }
-
-//    VertexGroup p = std::make_pair(pointsVertex, conv_hull2);
-    VertexGroup p = VertexGroup(pointsVertex, conv_hull2);
-//    pointsHullSet.push_back(p);
-    pointsHullSet.push_back(p);
-    std::cout << "points hull set size initialize: " << pointsHullSet.size() << "\n";
-
 }
 
 GLWidget::~GLWidget() {
