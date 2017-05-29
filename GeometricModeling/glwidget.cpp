@@ -24,14 +24,11 @@ void GLWidget::resizeGL(int w, int h) {
 void GLWidget::paintGL() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     adjustPerspective();
-//    std::cout << "points hull set size paint: " << pointsHullSet.size() << "\n";
     for (VertexGroup& ph : pointsHullSet) {
-//        std::cout << "printing points hull set ======================\n";
         glBegin(GL_POINTS);
             glColor3f(1.0f,0.0f,0.0f);
             //Desenha os pontos
             for (std::shared_ptr<Geometry::Vertex2D> vertex : ph.vertices) {
-//                std::cout << "vertex " << vertex->id << " : [" << vertex->pos.transpose() << "]\n";
                 glVertex2f(vertex->pos[0], vertex->pos[1]);
             }
         glEnd();
@@ -39,7 +36,6 @@ void GLWidget::paintGL() {
             glColor3f(0.0f,0.0f,1.0f);
             //Desenha as linhas
             for (std::shared_ptr<Geometry::Edge2D> edge : ph.hull) {
-//                std::cout << "edge " << edge->a->id << "-" << edge->b->id << " \n";
                 glVertex2f(edge->a->pos[0], edge->a->pos[1]);
                 glVertex2f(edge->b->pos[0], edge->b->pos[1]);
             }
@@ -98,26 +94,31 @@ void GLWidget::openArchive()
 
     int numGroups = in.readLine().toInt();
 
-    //Lê cada grupo
-    for (int i = 0; i < numGroups; i++) {
-        int numPoints = in.readLine().toInt();
-        std::vector<std::shared_ptr<Geometry::Vertex2D>> pointsVertex;
-        for (int j = 0; j < numPoints; j++) {
-            float id, x, y, z;
-            QString point = in.readLine();
-            QStringList info = point.split(" ");
-            id = info[0].toInt();
-            x = info[1].toFloat();
-            y = info[2].toFloat();
-            z = info[3].toFloat();
-            std::cout << "Read vertex " << id << ": " << x << " " << y << " " << z << "\n";
-            std::flush(std::cout);
-            pointsVertex.push_back(std::make_shared<Geometry::Vertex2D>(id, Vector2f(x,y)));
+    try {
+
+        //Lê cada grupo
+        for (int i = 0; i < numGroups; i++) {
+            int numPoints = in.readLine().toInt();
+            std::vector<std::shared_ptr<Geometry::Vertex2D>> pointsVertex;
+            for (int j = 0; j < numPoints; j++) {
+                float id, x, y, z;
+                QString point = in.readLine();
+                QStringList info = point.split(" ");
+                id = info[0].toInt();
+                x = info[1].toFloat();
+                y = info[2].toFloat();
+                z = info[3].toFloat();
+    //            std::cout << "Read vertex " << id << ": " << x << " " << y << " " << z << "\n";
+                std::flush(std::cout);
+                pointsVertex.push_back(std::make_shared<Geometry::Vertex2D>(id, Vector2f(x,y)));
+            }
+            pointsHullSet.push_back(pointsVertex);
         }
-        pointsHullSet.push_back(pointsVertex);
+
+    } catch (exception& e) {
+        std::cout << "Erro na leitura de arquivo!\n";
     }
 
-//    adjustPerspective();
     file.close();
     update();
 }
@@ -136,7 +137,7 @@ void GLWidget::saveArchive()
     QString fileName = QFileDialog::getSaveFileName(this,
         tr("Save Model File"), "/home", tr(""));
 
-    std::cout << "saving file: " << fileName.toStdString() << "\n";
+//    std::cout << "saving file: " << fileName.toStdString() << "\n";
 
     QFile file(fileName);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)) {

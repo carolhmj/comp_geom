@@ -14,12 +14,6 @@ float Primitives::angle(VectorXf a) {
     if (a.cols() !=  2) { throw 0; }
     return angle(a, Vector2f(1,0));
 }
-//Vetor normal ao plano dos pontos (em R3)
-//Área orientada do polígono formado pelos pontos (em R2)
-//    float S(std::vector<VectorXf> p, VectorXf o) {
-//        //TODO checar se tds de p são 2/3d e se o é 2/3d
-//        //TODO formula: S = 1/2 * (op1 x op2 + op2 x op3 + ... + opn x op1)
-//    }
 
 //Área orientada do polígono, com pontos 2D e o = (0,0)
 float Primitives::area(std::vector<Vector2f> p) {

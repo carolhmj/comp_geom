@@ -17,8 +17,6 @@ namespace Primitives {
     //Ângulo orientado de um vetor
     float angle(VectorXf a);
 
-    //    float S(std::vector<VectorXf> p, VectorXf o);
-
     //Área orientada (S) do polígono, com pontos 2D e o = (0,0)
     float area(std::vector<Vector2f> p);
 

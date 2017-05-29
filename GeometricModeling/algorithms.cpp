@@ -23,7 +23,6 @@ std::vector<Vector2f> Algorithm::quickhull(std::vector<Vector2f> C) {
         throw 1;
     }
 
-    //TODO: Dividir C nos pontos à direita e à esquerda da reta
     Vector2f div = vmaxy - vminy;
     std::vector<Vector2f> CL, CR;
 
@@ -46,14 +45,14 @@ std::vector<Vector2f> Algorithm::quickhull(std::vector<Vector2f> C) {
 
 std::vector<Vector2f> Algorithm::rec_quickhull(std::vector<Vector2f> C, Vector2f e, Vector2f d) {
     //Printar a aresta
-    std::cout << "[e: " << e.transpose() << " d: " << d.transpose() << "]" << std::endl;
+//    std::cout << "[e: " << e.transpose() << " d: " << d.transpose() << "]" << std::endl;
 
-    //Printar o conjunto
-    std::cout << "C: [" << std::endl;
-    for (Vector2f& v : C) {
-        std::cout << "\t" << v.transpose() << std::endl;
-    }
-    std::cout << "] " << std::endl;
+//    //Printar o conjunto
+//    std::cout << "C: [" << std::endl;
+//    for (Vector2f& v : C) {
+//        std::cout << "\t" << v.transpose() << std::endl;
+//    }
+//    std::cout << "] " << std::endl;
 
     //se C = { } retorne o segmento orientado ed
     if (C.size() == 0) {
@@ -66,7 +65,7 @@ std::vector<Vector2f> Algorithm::rec_quickhull(std::vector<Vector2f> C, Vector2f
     for (Vector2f& v : C) {
         h = v;
         float Sedh = Primitives::area({e,d,h});
-        std::cout << "v: " << v.transpose() << " Sedh: " << Sedh << "\n";
+//        std::cout << "v: " << v.transpose() << " Sedh: " << Sedh << "\n";
         if (Sedh > maxSedh) {
             maxSedh = Sedh;
             maxh = h;
@@ -74,7 +73,6 @@ std::vector<Vector2f> Algorithm::rec_quickhull(std::vector<Vector2f> C, Vector2f
         }
     }
     if (!foundh) {
-        //TODO problema?
         throw 1;
     }
 
@@ -88,12 +86,11 @@ std::vector<Vector2f> Algorithm::rec_quickhull(std::vector<Vector2f> C, Vector2f
     //encontrar CR o conjunto de pontos de C à esquerda de hd
     for (Vector2f& v : C) {
         if (v != h) {
-            std::cout << "orientation of " << v.transpose() << "\n";
             if (Primitives::isLeftTo(v-e, eh)) {
-                std::cout << "is left to " << eh.transpose() << "\n";
+//                std::cout << "is left to " << eh.transpose() << "\n";
                 CL.push_back(v);
             } else if (Primitives::isLeftTo(v-h, hd)) {
-                std::cout << "is left to " << hd.transpose() << "\n";
+//                std::cout << "is left to " << hd.transpose() << "\n";
                 CR.push_back(v);
             }
         }
@@ -129,7 +126,6 @@ std::vector<std::shared_ptr<Geometry::Edge2D> > Algorithm::quickhull(std::vector
         throw 1;
     }
 
-    //TODO: Dividir C nos pontos à direita e à esquerda da reta
     Vector2f div = vmaxy->pos - vminy->pos;
     std::vector<std::shared_ptr<Geometry::Vertex2D>> CL, CR;
 
@@ -182,7 +178,6 @@ std::vector<std::shared_ptr<Geometry::Edge2D>> Algorithm::rec_quickhull(std::vec
         }
     }
     if (!foundh) {
-        //TODO problema?
         throw 1;
     }
 
